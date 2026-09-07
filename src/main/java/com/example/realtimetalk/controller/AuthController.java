@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import com.example.realtimetalk.dto.LoginRequest;
 
 @RestController
 @RequestMapping("/api/auth")
@@ -26,4 +27,15 @@ public class AuthController {
                 .status(HttpStatus.CREATED)
                 .body(registeredUser);
     }
+
+    @PostMapping("/login")
+    public ResponseEntity<String> login(@RequestBody LoginRequest loginRequest){
+        String token = userService.loginUser(
+                loginRequest.getUsername(),
+                loginRequest.getPassword()
+        );
+
+        return ResponseEntity.ok(token);
+    }
+
 }
